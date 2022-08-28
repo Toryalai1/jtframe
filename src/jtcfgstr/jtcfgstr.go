@@ -71,8 +71,8 @@ func parse_args(cfg jtdef.Config, args []string) {
 		fmt.Println("def=", cfg.Deffile)
 	}
 	for k := 1; k < len(args); k++ {
-		cfg.Discard = append_args("-undef", &k, cfg.Discard)
-		cfg.Add = append_args("-def", &k, cfg.Add)
+		cfg.Discard = append_args("--undef", &k, cfg.Discard)
+		cfg.Add = append_args("--def", &k, cfg.Add)
 	}
 	return
 }

@@ -27,7 +27,7 @@ creates input files for simulation or synthesis`,
 
 func init() {
 	rootCmd.AddCommand(cfgstrCmd)
-	flag := cfgstrCmd.PersistentFlags()
+	flag := cfgstrCmd.Flags()
 
 	flag.StringVarP(&cfg.Target, "target", "t", "mist", "Target platform (mist, mister, sidi, neptuno, mc2, mcp, pocket)")
 	flag.StringVar(&cfg.Deffile, "parse", "", "Path to .def file")
@@ -37,5 +37,5 @@ func init() {
 	flag.String("undef", "", "Undefines macro")
 	flag.StringVar(&cfg.Output, "output", "cfgstr",
 		"Type of output: \n\tcfgstr -> config string\n\tbash -> bash script\n\tquartus -> quartus tcl\n\tsimulator name as specified in jtsim")
-	flag.BoolVar(&cfg.Verbose, "v", false, "verbose")
+	flag.BoolVarP(&cfg.Verbose, "verbose","v", false, "verbose")
 }

@@ -18,8 +18,6 @@
 package cmd
 
 import (
-	"flag"
-
 	"github.com/jotego/jtframe/jtfiles"
 
 	"github.com/spf13/cobra"
@@ -42,6 +40,7 @@ var files_args jtfiles.Args
 
 func init() {
 	rootCmd.AddCommand(filesCmd)
+	flag := filesCmd.Flags()
 
 	flag.StringVar(&files_args.Output, "output", "", "Output file name with no extension. Default is 'game'")
 	flag.StringVar(&files_args.Target, "target", "", "Target platform: mist, mister, pocket, etc.")
