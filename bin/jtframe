@@ -1,7 +1,13 @@
 #!/bin/bash
+POCKET=
+
 if [ ! -e $JTFRAME/src/jtframe ]; then
+    if [ ! -e $JTFRAME/target/pocket/pocket.go ]; then
+        ln -sr $JTFRAME/target/pocket/pocket.go $JTFRAME/src/mra/pocket.go
+        POCKET="-tags pocket"
+    fi
     cd $JTFRAME/src
-    go build . || exit $?
+    go build $POCKET . || exit $?
 fi
 
 $JTFRAME/src/jtframe $*

@@ -1,5 +1,4 @@
-//go:build !pocket
-
+//go:build ! pocket
 
 package mra
 
