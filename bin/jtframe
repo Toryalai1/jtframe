@@ -2,9 +2,10 @@
 POCKET=
 
 if [ ! -e $JTFRAME/src/jtframe ]; then
-    if [ ! -e $JTFRAME/target/pocket/pocket.go ]; then
-        ln -sr $JTFRAME/target/pocket/pocket.go $JTFRAME/src/mra/pocket.go
+    if [ -e $JTFRAME/target/pocket/pocket.go ]; then
+        ln -srf $JTFRAME/target/pocket/pocket.go $JTFRAME/src/mra/pocket.go
         POCKET="-tags pocket"
+        echo "compiling jtframe with Pocket support"
     fi
     cd $JTFRAME/src
     go build $POCKET . || exit $?
