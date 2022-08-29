@@ -51,7 +51,8 @@ func init() {
 	flag.StringVar(&mra_args.Outdir, "Outdir", "mra", "Output folder")
 	flag.StringVar(&mra_args.Altdir, "Altdir", "", "Output folder for alternatives")
 	flag.StringVar(&mra_args.Year, "year", "", "Year string for MRA file comment")
-	flag.BoolVar(&mra_args.Verbose, "v", false, "verbose")
+	flag.BoolVarP(&mra_args.Verbose, "verbose","v", false, "verbose")
+	flag.BoolVarP(&mra_args.SkipMRA, "skipMRA","s", false, "Do not generate MRA files")
 	flag.StringVar(&mra_args.Buttons, "buttons", "", "Buttons used by the game -upto six-")
 }
 

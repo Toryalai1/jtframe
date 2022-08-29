@@ -148,7 +148,7 @@ type Args struct {
 	Info                      []Info
 	Buttons                   string
 	Year                      string
-	Verbose                   bool
+	Verbose, SkipMRA          bool
 }
 
 type XMLAttr struct {
@@ -324,20 +324,23 @@ extra_loop:
 	}
 	// Dump MRA is delayed for later so we get all the parent names collected
 	fmt.Println("Total: ", len(data_queue), " games")
-	for _, d := range data_queue {
-		_, good := parent_names[d.machine.Cloneof]
-		if good || len(d.machine.Cloneof) == 0 {
-			dump_mra(args, d.machine, d.mra_xml, d.cloneof, parent_names)
-		} else {
-			fmt.Printf("Skipping derivative '%s' as parent '%s' was not found\n",
-				d.machine.Name, d.machine.Cloneof)
+	if !args.SkipMRA {
+		for _, d := range data_queue {
+			_, good := parent_names[d.machine.Cloneof]
+			if good || len(d.machine.Cloneof) == 0 {
+				dump_mra(args, d.machine, d.mra_xml, d.cloneof, parent_names)
+			} else {
+				fmt.Printf("Skipping derivative '%s' as parent '%s' was not found\n",
+					d.machine.Name, d.machine.Cloneof)
+			}
 		}
 	}
 }
 
 ////////////////////////////////////////////////////////////////////////
 func fix_filename(filename string) string {
-	return strings.ReplaceAll(filename, "?", "x")
+	x := strings.ReplaceAll(filename, "World?", "World")
+	return strings.ReplaceAll(x, "?", "x")
 }
 
 func dump_mra(args Args, machine *MachineXML, mra_xml *XMLNode, cloneof bool, parent_names map[string]string) {
@@ -383,6 +386,9 @@ func dump_mra(args Args, machine *MachineXML, mra_xml *XMLNode, cloneof bool, pa
 	file, err := os.Create(fname)
 	if err != nil {
 		log.Fatal(err)
+	}
+	if args.Verbose {
+		fmt.Printf("Dumping to MRA file %s\n",fname)
 	}
 	dump_str := mra_xml.Dump()
 	file.WriteString(mra_disclaimer(machine, args.Year))
